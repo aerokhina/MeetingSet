@@ -10,8 +10,6 @@ namespace MeetingSet.Data
     
     public string Email { get; set; }
     
-    public ICollection<Meeting> Meetings { get; set; }
-    
     public List<MeetingParticipant> MeetingParticipants { get; set; }
     
     public Participant()

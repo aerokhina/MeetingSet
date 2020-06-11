@@ -13,20 +13,12 @@ namespace MeetingSet.Data
     public DbSet<Meeting> Meetings { get; set; }
     public DbSet<Participant> Participants { get; set; }
     
+    public DbSet<MeetingParticipant> MeetingParticipants { get; set; }
+    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
       modelBuilder.Entity<MeetingParticipant>()
         .HasKey(t => new { t.MeetingId, t.ParticipantId });
- 
-      modelBuilder.Entity<MeetingParticipant>()
-        .HasOne(sc => sc.Meeting)
-        .WithMany(s => s.MeetingParticipants)
-        .HasForeignKey(sc => sc.MeetingId);
- 
-      modelBuilder.Entity<MeetingParticipant>()
-        .HasOne(sc => sc.Participant)
-        .WithMany(c => c.MeetingParticipants)
-        .HasForeignKey(sc => sc.ParticipantId);
     }
   }
 }
