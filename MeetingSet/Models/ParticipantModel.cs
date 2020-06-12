@@ -4,9 +4,11 @@ namespace MeetingSet.Models
 {
   public class ParticipantInputModel
   {
+    [Required]
     public string Name { get; set; }
-
-    [EmailAddress (ErrorMessage = "Incorrect email")]
+    
+    [Required]
+    [EmailAddress]
     public string Email { get; set; }
   }
 

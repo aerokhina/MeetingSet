@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace MeetingSet.Data
 {
@@ -7,9 +8,12 @@ namespace MeetingSet.Data
   {
     public int Id { get; set; }
 
+    [Required]
     public string Name { get; set; }
-
-    public DateTime DateTimeMeeting { get; set; }
+    
+    public DateTime StartDateTimeMeeting { get; set; }
+    
+    public DateTime EndDateTimeMeeting { get; set; }
 
     public List<MeetingParticipant> MeetingParticipants { get; set; }
 

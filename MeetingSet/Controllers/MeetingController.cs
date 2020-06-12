@@ -22,10 +22,19 @@ namespace MeetingSet.Controllers
     [Route("[action]")]
     public async Task<IActionResult> Create([FromBody] MeetingInputModel model)
     {
+      if (model.StartDateTimeMeeting > model.EndDateTimeMeeting)
+      {
+        ModelState.AddModelError("MeetingPeriod", "Start date of meeting should be less than end date");
+      }
+
+      if (!ModelState.IsValid)
+        return BadRequest(ModelState);
+
       var item = new Meeting
       {
         Name = model.Name,
-        DateTimeMeeting = model.DateTimeMeeting
+        StartDateTimeMeeting = model.StartDateTimeMeeting.Value,
+        EndDateTimeMeeting = model.EndDateTimeMeeting.Value
       };
       _context.Add(item);
       await _context.SaveChangesAsync();
@@ -33,7 +42,8 @@ namespace MeetingSet.Controllers
         new MeetingOutputModel
         {
           Name = item.Name,
-          DateTimeMeeting = model.DateTimeMeeting,
+          StartDateTimeMeeting = model.StartDateTimeMeeting.Value,
+          EndDateTimeMeeting = model.EndDateTimeMeeting.Value,
           Id = item.Id,
         }
       );
@@ -59,12 +69,26 @@ namespace MeetingSet.Controllers
     [Route("{meetingId}/[action]/{participantId}")]
     public async Task<IActionResult> AddParticipant(int meetingId, int participantId)
     {
-      var item = await _context.Meetings
-        .AnyAsync(x => x.Id == meetingId);
-      if (!item)
+      var meeting = await _context.Meetings
+        .SingleOrDefaultAsync(x => x.Id == meetingId);
+      if (meeting == null)
       {
         throw new ArgumentException("Meeting not found");
       }
+
+      var isTimeValid = await _context.MeetingParticipants.Where(mp => mp.ParticipantId == participantId)
+        .AllAsync(
+        x => x.Meeting.StartDateTimeMeeting > meeting.EndDateTimeMeeting
+             || x.Meeting.EndDateTimeMeeting < meeting.StartDateTimeMeeting
+      );
+
+      if (!isTimeValid)
+      {
+        ModelState.AddModelError("ParticipantMeeting", "Participant is busy at this time");
+      }
+
+      if (!ModelState.IsValid)
+        return BadRequest(ModelState);
 
       _context.Add(new MeetingParticipant {MeetingId = meetingId, ParticipantId = participantId});
       _context.SaveChanges();
@@ -96,7 +120,8 @@ namespace MeetingSet.Controllers
         {
           Name = x.Name,
           Id = x.Id,
-          DateTimeMeeting = x.DateTimeMeeting,
+          StartDateTimeMeeting = x.StartDateTimeMeeting,
+          EndDateTimeMeeting = x.EndDateTimeMeeting,
           Participants = x.MeetingParticipants
             .Select(
               p => new ParticipantOutputModel()
