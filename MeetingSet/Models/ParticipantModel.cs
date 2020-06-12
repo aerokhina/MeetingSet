@@ -1,9 +1,12 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace MeetingSet.Models
 {
   public class ParticipantInputModel
   {
     public string Name { get; set; }
 
+    [EmailAddress (ErrorMessage = "Incorrect email")]
     public string Email { get; set; }
   }
 

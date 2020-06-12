@@ -21,11 +21,15 @@ namespace MeetingSet.Controllers
     [Route("[action]")]
     public async Task<IActionResult> Create([FromBody] ParticipantInputModel model)
     {
+      if (!ModelState.IsValid)
+        return BadRequest(ModelState);
+      
       var item = new Participant
       {
         Name = model.Name,
         Email = model.Email
       };
+      
       _context.Add(item);
       await _context.SaveChangesAsync();
       return Ok(
