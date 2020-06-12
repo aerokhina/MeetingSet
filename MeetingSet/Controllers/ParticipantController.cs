@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 namespace MeetingSet.Controllers
 {
   [Route("[controller]")]
-  public class ParticipantController: Controller
+  public class ParticipantController : Controller
   {
     private readonly ApplicationContext _context;
 
@@ -16,7 +16,7 @@ namespace MeetingSet.Controllers
     {
       _context = context;
     }
-    
+
     [HttpPost]
     [Route("[action]")]
     public async Task<IActionResult> Create([FromBody] ParticipantInputModel model)
@@ -28,14 +28,16 @@ namespace MeetingSet.Controllers
       };
       _context.Add(item);
       await _context.SaveChangesAsync();
-      return Ok(new ParticipantOutputModel
-      {
-        Name = item.Name,
-        Email = model.Email,
-        Id = item.Id,
-      });
+      return Ok(
+        new ParticipantOutputModel
+        {
+          Name = item.Name,
+          Email = model.Email,
+          Id = item.Id,
+        }
+      );
     }
-    
+
     [HttpPost]
     [Route("[action]/{id}")]
     public async Task<IActionResult> Delete(int id)

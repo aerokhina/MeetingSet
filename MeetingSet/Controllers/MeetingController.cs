@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using MeetingSet.Data;
 using MeetingSet.Models;
@@ -84,6 +85,31 @@ namespace MeetingSet.Controllers
       _context.Remove(item);
       _context.SaveChanges();
       return Ok();
+    }
+
+    [HttpPost]
+    [Route("[action]")]
+    public async Task<IActionResult> GetList()
+    {
+      var result = await _context.Meetings.Select(
+        x => new MeetingListItemModel()
+        {
+          Name = x.Name,
+          Id = x.Id,
+          DateTimeMeeting = x.DateTimeMeeting,
+          Participants = x.MeetingParticipants
+            .Select(
+              p => new ParticipantOutputModel()
+              {
+                Id = p.ParticipantId,
+                Name = p.Participant.Name,
+                Email = p.Participant.Email,
+              }
+            ).ToList()
+        }
+      ).ToListAsync();
+
+      return Ok(result);
     }
   }
 }
