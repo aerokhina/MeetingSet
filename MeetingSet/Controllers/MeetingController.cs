@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MeetingSet.Data;
 using MeetingSet.Models;
+using MeetingSet.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -77,9 +78,9 @@ namespace MeetingSet.Controllers
         return NotFound();
       }
 
-      var participant = await _context.Participants.AnyAsync(x => x.Id == participantId);
+      var participant = await _context.Participants.SingleOrDefaultAsync(x => x.Id == participantId);
 
-      if (!participant)
+      if (participant == null)
       {
         return NotFound();
       }
@@ -98,6 +99,10 @@ namespace MeetingSet.Controllers
 
       _context.Add(new MeetingParticipant {MeetingId = meetingId, ParticipantId = participantId});
       _context.SaveChanges();
+      
+      EmailService emailService = new EmailService();
+      await emailService.SendEmailAsync(participant.Email, meeting);
+      
       return Ok();
     }
 
