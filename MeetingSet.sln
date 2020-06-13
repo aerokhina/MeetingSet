@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeetingSet", "MeetingSet\MeetingSet.csproj", "{ADD6DDDE-8E37-4EDB-8F83-26D86198D487}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeetingSet.Tests", "MeetingSet.Tests\MeetingSet.Tests.csproj", "{77B5C4B1-FACC-4970-8C87-E2816D040427}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{ADD6DDDE-8E37-4EDB-8F83-26D86198D487}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ADD6DDDE-8E37-4EDB-8F83-26D86198D487}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ADD6DDDE-8E37-4EDB-8F83-26D86198D487}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77B5C4B1-FACC-4970-8C87-E2816D040427}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77B5C4B1-FACC-4970-8C87-E2816D040427}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77B5C4B1-FACC-4970-8C87-E2816D040427}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77B5C4B1-FACC-4970-8C87-E2816D040427}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
