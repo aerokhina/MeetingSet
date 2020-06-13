@@ -50,7 +50,7 @@ namespace MeetingSet.Controllers
         .SingleOrDefaultAsync(x => x.Id == id);
       if (item == null)
       {
-        throw new ArgumentException("Participant not found");
+        return NotFound();
       }
 
       _context.Remove(item);

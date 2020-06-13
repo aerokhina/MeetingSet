@@ -57,7 +57,7 @@ namespace MeetingSet.Controllers
         .SingleOrDefaultAsync(x => x.Id == id);
       if (item == null)
       {
-        throw new ArgumentException("Meeting not found");
+        return NotFound();
       }
 
       _context.Remove(item);
@@ -71,24 +71,30 @@ namespace MeetingSet.Controllers
     {
       var meeting = await _context.Meetings
         .SingleOrDefaultAsync(x => x.Id == meetingId);
+
       if (meeting == null)
       {
-        throw new ArgumentException("Meeting not found");
+        return NotFound();
+      }
+
+      var participant = await _context.Participants.AnyAsync(x => x.Id == participantId);
+
+      if (!participant)
+      {
+        return NotFound();
       }
 
       var isTimeValid = await _context.MeetingParticipants.Where(mp => mp.ParticipantId == participantId)
         .AllAsync(
-        x => x.Meeting.StartDateTimeMeeting > meeting.EndDateTimeMeeting
-             || x.Meeting.EndDateTimeMeeting < meeting.StartDateTimeMeeting
-      );
+          x => x.Meeting.StartDateTimeMeeting > meeting.EndDateTimeMeeting
+               || x.Meeting.EndDateTimeMeeting < meeting.StartDateTimeMeeting
+        );
 
       if (!isTimeValid)
       {
         ModelState.AddModelError("ParticipantMeeting", "Participant is busy at this time");
-      }
-
-      if (!ModelState.IsValid)
         return BadRequest(ModelState);
+      }
 
       _context.Add(new MeetingParticipant {MeetingId = meetingId, ParticipantId = participantId});
       _context.SaveChanges();
@@ -103,7 +109,7 @@ namespace MeetingSet.Controllers
         .SingleOrDefaultAsync(x => x.MeetingId == meetingId && x.ParticipantId == participantId);
       if (item == null)
       {
-        throw new ArgumentException("Meeting participant not found");
+        return NotFound();
       }
 
       _context.Remove(item);
