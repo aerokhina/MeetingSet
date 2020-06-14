@@ -34,7 +34,7 @@ response:
     "endDateTimeMeeting": "2007-04-05T18:35:00"
 }
 
--Создать участника:
+- Создать участника:
 POST http://localhost:5000/participant/create
 body:
 {
@@ -49,21 +49,21 @@ response:
     "email": "ed@ru"
 }
 
--Удалить встречу
+- Удалить встречу
 POST http://localhost:5000/meeting/delete/1
 
--Удалить участника:
+- Удалить участника:
 POST  http://localhost:5000/participant/delete/1
 
--Добавить участника на встречу:
+- Добавить участника на встречу:
 POST  http://localhost:5000/meeting/1/addParticipant/1
 Проверка занят/свободен ли участник для встречи.
 Если участник свободен, он добавляется на встречу, и ему на почту приходит уведомление о том, что он был добавлен на митинг.
 
--Удалить участника из встречи:
+- Удалить участника из встречи:
 POST  http://localhost:5000/meeting/1/removeParticipant/1
 
--Получить список встреч с участниками:
+- Получить список встреч с участниками:
 POST http://localhost:5000/meeting/getList
 response:
 [
