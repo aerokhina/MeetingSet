@@ -32,7 +32,7 @@ namespace MeetingSet
 
       services.AddSingleton<IEmailService, EmailService>();
       
-      services.Configure<NotificationConfiguration>(Configuration.GetSection("Notification"));
+      services.Configure<MeetingNotificationConfiguration>(Configuration.GetSection("MeetingNotification"));
 
       services.AddScoped<MeetingNotificationService>();
       

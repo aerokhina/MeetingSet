@@ -15,17 +15,17 @@ namespace MeetingSet.Services
   public class MeetingNotificationBackgroundService : BackgroundService
   {
     private readonly IServiceProvider _services;
-    private readonly NotificationConfiguration _notificationConfiguration;
+    private readonly MeetingNotificationConfiguration _meetingNotificationConfiguration;
 
     private bool _isWorking = true;
 
     public MeetingNotificationBackgroundService(
       IServiceProvider services,
-      IOptions<NotificationConfiguration> notificationConfiguration
+      IOptions<MeetingNotificationConfiguration> notificationConfiguration
     )
     {
       _services = services;
-      _notificationConfiguration = notificationConfiguration.Value;
+      _meetingNotificationConfiguration = notificationConfiguration.Value;
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -38,7 +38,7 @@ namespace MeetingSet.Services
           await meetingNotificationService.NotifyParticipantsMeeting();
         }
       }
-      await Task.Delay(_notificationConfiguration.PollingDelaySeconds*1000, stoppingToken);
+      await Task.Delay(_meetingNotificationConfiguration.PollingDelaySeconds*1000, stoppingToken);
     }
 
     public override Task StopAsync(CancellationToken cancellationToken)

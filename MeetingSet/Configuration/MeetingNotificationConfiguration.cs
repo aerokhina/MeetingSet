@@ -1,6 +1,6 @@
 namespace MeetingSet
 {
-  public class NotificationConfiguration
+  public class MeetingNotificationConfiguration
   {
     public double MeetingDelayMinutes { get; set; }
     

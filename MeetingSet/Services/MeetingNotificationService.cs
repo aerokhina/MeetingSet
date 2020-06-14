@@ -9,7 +9,7 @@ namespace MeetingSet.Services
 {
   public class MeetingNotificationService
   {
-    private readonly NotificationConfiguration _notificationConfiguration;
+    private readonly MeetingNotificationConfiguration _meetingNotificationConfiguration;
 
     private readonly ApplicationContext _context;
 
@@ -17,19 +17,19 @@ namespace MeetingSet.Services
 
     public MeetingNotificationService(
       ApplicationContext context,
-      IOptions<NotificationConfiguration> notificationConfiguration,
+      IOptions<MeetingNotificationConfiguration> notificationConfiguration,
       IEmailService emailService
     )
     {
       _context = context;
-      _notificationConfiguration = notificationConfiguration.Value;
+      _meetingNotificationConfiguration = notificationConfiguration.Value;
       _emailService = emailService;
     }
 
     public async Task NotifyParticipantsMeeting()
     {
       var dateTimeNow = DateTime.Now;
-      var dateTimePeriodDelay = dateTimeNow.AddMinutes(_notificationConfiguration.MeetingDelayMinutes);
+      var dateTimePeriodDelay = dateTimeNow.AddMinutes(_meetingNotificationConfiguration.MeetingDelayMinutes);
 
       var meetings = await _context.Meetings
         .Where(
