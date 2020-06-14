@@ -142,6 +142,7 @@ namespace MeetingSet.Tests
     {
       const int idMeeting = 1;
       const int idParticipant = 1;
+      const string email = "sa@as.rt";
 
       _context.Meetings.Add(
         new Meeting
@@ -158,7 +159,7 @@ namespace MeetingSet.Tests
         {
           Id = idParticipant,
           Name = "Sasha",
-          Email = "sa@as.rt"
+          Email = email
         }
       );
 
@@ -177,6 +178,8 @@ namespace MeetingSet.Tests
 
       Assert.NotNull(result);
       Assert.IsType<OkResult>(result);
+      
+      _emailServiceMock.Verify(send => send.SendEmailAsync(email, _context.Meetings.Find(idMeeting)), Times.Once);
     }
 
     [Fact]
@@ -221,6 +224,7 @@ namespace MeetingSet.Tests
     {
       const int idMeeting = 1;
       const int idParticipant = 1;
+      const string email = "sa@as.rt";
 
       _context.Meetings.Add(
         new Meeting
@@ -237,7 +241,7 @@ namespace MeetingSet.Tests
         {
           Id = 2,
           Name = "Sasha",
-          Email = "sa@as.rt"
+          Email = email
         }
       );
 
@@ -251,6 +255,8 @@ namespace MeetingSet.Tests
 
       Assert.NotNull(result);
       Assert.IsType<NotFoundResult>(result);
+
+      _emailServiceMock.Verify(send => send.SendEmailAsync(It.IsAny<string>(), It.IsAny<Meeting>()), Times.Never);
     }
 
     [Fact]
@@ -307,6 +313,8 @@ namespace MeetingSet.Tests
 
       Assert.NotNull(result);
       Assert.IsType<BadRequestObjectResult>(result);
+
+      _emailServiceMock.Verify(send => send.SendEmailAsync(It.IsAny<string>(), It.IsAny<Meeting>()), Times.Never);
     }
 
     [Fact]

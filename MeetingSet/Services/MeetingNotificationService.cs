@@ -10,25 +10,26 @@ namespace MeetingSet.Services
   public class MeetingNotificationService
   {
     private readonly MeetingNotificationConfiguration _meetingNotificationConfiguration;
-
     private readonly ApplicationContext _context;
-
     private readonly IEmailService _emailService;
+    private readonly IDateTimeProvider _dateTimeProvider;
 
     public MeetingNotificationService(
       ApplicationContext context,
       IOptions<MeetingNotificationConfiguration> notificationConfiguration,
-      IEmailService emailService
+      IEmailService emailService,
+      IDateTimeProvider dateTimeProvider
     )
     {
       _context = context;
       _meetingNotificationConfiguration = notificationConfiguration.Value;
       _emailService = emailService;
+      _dateTimeProvider = dateTimeProvider;
     }
 
     public async Task NotifyParticipantsMeeting()
     {
-      var dateTimeNow = DateTime.Now;
+      var dateTimeNow = _dateTimeProvider.Now();
       var dateTimePeriodDelay = dateTimeNow.AddMinutes(_meetingNotificationConfiguration.MeetingDelayMinutes);
 
       var meetings = await _context.Meetings
