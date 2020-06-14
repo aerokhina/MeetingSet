@@ -1,18 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using MeetingSet.Data;
 using MeetingSet.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace MeetingSet
 {
@@ -37,11 +30,13 @@ namespace MeetingSet
       
       services.AddHostedService<MeetingNotificationBackgroundService>();
 
-      services.AddSingleton<EmailService>();
+      services.AddSingleton<IEmailService, EmailService>();
       
       services.Configure<NotificationConfiguration>(Configuration.GetSection("Notification"));
 
       services.AddScoped<MeetingNotificationService>();
+      
+      services.Configure<EmailConfiguration>(Configuration.GetSection("Email"));
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

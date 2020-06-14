@@ -4,8 +4,10 @@ using System.Linq;
 using MeetingSet.Controllers;
 using MeetingSet.Data;
 using MeetingSet.Models;
+using MeetingSet.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Moq;
 using Xunit;
 
 namespace MeetingSet.Tests
@@ -13,6 +15,7 @@ namespace MeetingSet.Tests
   public class MeetingControllerTests
   {
     private readonly ApplicationContext _context;
+    private readonly Mock<IEmailService> _emailServiceMock;
 
     public MeetingControllerTests()
     {
@@ -20,6 +23,7 @@ namespace MeetingSet.Tests
       builder.UseInMemoryDatabase(Guid.NewGuid().ToString());
       var options = builder.Options;
       _context = new ApplicationContext(options);
+      _emailServiceMock = new Mock<IEmailService>();
     }
 
     [Fact]
@@ -29,7 +33,7 @@ namespace MeetingSet.Tests
       var startDate = new DateTime(2020, 06, 12, 21, 30, 00);
       var endDate = new DateTime(2020, 06, 12, 23, 30, 00);
 
-      var controller = new MeetingController(_context);
+      var controller = new MeetingController(_context, _emailServiceMock.Object);
 
       var result = await controller.Create(
         new MeetingInputModel()
@@ -65,7 +69,7 @@ namespace MeetingSet.Tests
       var startDate = new DateTime(2020, 06, 12, 21, 30, 00);
       var endDate = new DateTime(2020, 06, 12, 19, 30, 00);
 
-      var controller = new MeetingController(_context);
+      var controller = new MeetingController(_context, _emailServiceMock.Object);
       var result = await controller.Create(
         new MeetingInputModel()
         {
@@ -97,7 +101,7 @@ namespace MeetingSet.Tests
 
       _context.SaveChanges();
 
-      var controller = new MeetingController(_context);
+      var controller = new MeetingController(_context, _emailServiceMock.Object);
 
       var result = await controller.Delete(idMeeting);
 
@@ -123,7 +127,7 @@ namespace MeetingSet.Tests
 
       _context.SaveChanges();
 
-      var controller = new MeetingController(_context);
+      var controller = new MeetingController(_context, _emailServiceMock.Object);
 
       var result = await controller.Delete(idMeeting);
 
@@ -160,7 +164,7 @@ namespace MeetingSet.Tests
 
       _context.SaveChanges();
 
-      var controller = new MeetingController(_context);
+      var controller = new MeetingController(_context, _emailServiceMock.Object);
 
       var result = await controller.AddParticipant(idMeeting, idParticipant);
 
@@ -202,7 +206,7 @@ namespace MeetingSet.Tests
 
       _context.SaveChanges();
 
-      var controller = new MeetingController(_context);
+      var controller = new MeetingController(_context, _emailServiceMock.Object);
 
       var result = await controller.AddParticipant(idMeeting, idParticipant);
 
@@ -239,7 +243,7 @@ namespace MeetingSet.Tests
 
       _context.SaveChanges();
 
-      var controller = new MeetingController(_context);
+      var controller = new MeetingController(_context, _emailServiceMock.Object);
 
       var result = await controller.AddParticipant(idMeeting, idParticipant);
 
@@ -295,7 +299,7 @@ namespace MeetingSet.Tests
 
       _context.SaveChanges();
 
-      var controller = new MeetingController(_context);
+      var controller = new MeetingController(_context, _emailServiceMock.Object);
 
       var result = await controller.AddParticipant(idSecondMeeting, idParticipant);
 
@@ -321,7 +325,7 @@ namespace MeetingSet.Tests
 
       _context.SaveChanges();
 
-      var controller = new MeetingController(_context);
+      var controller = new MeetingController(_context, _emailServiceMock.Object);
 
       var result = await controller.RemoveParticipant(idMeeting, idParticipant);
 
@@ -347,7 +351,7 @@ namespace MeetingSet.Tests
 
       _context.SaveChanges();
 
-      var controller = new MeetingController(_context);
+      var controller = new MeetingController(_context, _emailServiceMock.Object);
 
       var result = await controller.RemoveParticipant(idMeeting, idParticipant);
 
@@ -397,7 +401,7 @@ namespace MeetingSet.Tests
 
       _context.SaveChanges();
 
-      var controller = new MeetingController(_context);
+      var controller = new MeetingController(_context, _emailServiceMock.Object);
 
       var result = await controller.GetList();
 

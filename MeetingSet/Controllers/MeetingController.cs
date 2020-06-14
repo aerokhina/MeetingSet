@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 using MeetingSet.Data;
@@ -14,9 +13,12 @@ namespace MeetingSet.Controllers
   {
     private readonly ApplicationContext _context;
 
-    public MeetingController(ApplicationContext context)
+    private readonly IEmailService _emailService;
+
+    public MeetingController(ApplicationContext context, IEmailService emailService)
     {
       _context = context;
+      _emailService = emailService;
     }
 
     [HttpPost]
@@ -100,8 +102,7 @@ namespace MeetingSet.Controllers
       _context.Add(new MeetingParticipant {MeetingId = meetingId, ParticipantId = participantId});
       _context.SaveChanges();
       
-      EmailService emailService = new EmailService();
-      await emailService.SendEmailAsync(participant.Email, meeting);
+      await _emailService.SendEmailAsync(participant.Email, meeting);
       
       return Ok();
     }

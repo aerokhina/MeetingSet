@@ -13,12 +13,12 @@ namespace MeetingSet.Services
 
     private readonly ApplicationContext _context;
 
-    private readonly EmailService _emailService;
+    private readonly IEmailService _emailService;
 
     public MeetingNotificationService(
       ApplicationContext context,
       IOptions<NotificationConfiguration> notificationConfiguration,
-      EmailService emailService
+      IEmailService emailService
     )
     {
       _context = context;
