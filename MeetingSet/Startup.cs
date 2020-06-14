@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MeetingSet.Data;
+using MeetingSet.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -33,6 +34,10 @@ namespace MeetingSet
         options =>
           options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")
             ));
+      
+      services.AddHostedService<NotificationService>();
+
+      services.AddSingleton<EmailService>();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

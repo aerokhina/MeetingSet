@@ -16,6 +16,8 @@ namespace MeetingSet.Data
     public DateTime EndDateTimeMeeting { get; set; }
 
     public List<MeetingParticipant> MeetingParticipants { get; set; }
+    
+    public bool IsNotified { get; set; }
 
     public Meeting()
     {

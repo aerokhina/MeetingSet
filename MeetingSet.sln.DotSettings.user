@@ -1,0 +1,9 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=b4d1cc5a_002Da377_002D4572_002D99c4_002D000907e2d269/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="MeetingControllerTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::77B5C4B1-FACC-4970-8C87-E2816D040427::.NETCoreApp,Version=v3.1::MeetingSet.Tests.MeetingControllerTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::77B5C4B1-FACC-4970-8C87-E2816D040427::.NETCoreApp,Version=v3.1::MeetingSet.Tests.ParticipantControllerTests.CreateParticipant_Success&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::77B5C4B1-FACC-4970-8C87-E2816D040427::.NETCoreApp,Version=v3.1::MeetingSet.Tests.ParticipantControllerTests.DeleteParticipant_Success&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::77B5C4B1-FACC-4970-8C87-E2816D040427::.NETCoreApp,Version=v3.1::MeetingSet.Tests.ParticipantControllerTests.DeleteParticipant_FailsWhenNotFound&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
