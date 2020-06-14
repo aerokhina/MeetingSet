@@ -35,9 +35,13 @@ namespace MeetingSet
           options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")
             ));
       
-      services.AddHostedService<NotificationService>();
+      services.AddHostedService<MeetingNotificationBackgroundService>();
 
       services.AddSingleton<EmailService>();
+      
+      services.Configure<NotificationConfiguration>(Configuration.GetSection("Notification"));
+
+      services.AddScoped<MeetingNotificationService>();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
