@@ -53,7 +53,7 @@ namespace MeetingSet.Controllers
       }
 
       _context.Remove(item);
-      _context.SaveChanges();
+      await _context.SaveChangesAsync();
       return Ok();
     }
   }

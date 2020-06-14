@@ -64,7 +64,7 @@ namespace MeetingSet.Controllers
       }
 
       _context.Remove(item);
-      _context.SaveChanges();
+      await _context.SaveChangesAsync();
       return Ok();
     }
 
@@ -100,7 +100,7 @@ namespace MeetingSet.Controllers
       }
 
       _context.Add(new MeetingParticipant {MeetingId = meetingId, ParticipantId = participantId});
-      _context.SaveChanges();
+      await _context.SaveChangesAsync();
       
       await _emailService.SendEmailAsync(participant.Email, meeting);
       
@@ -119,7 +119,7 @@ namespace MeetingSet.Controllers
       }
 
       _context.Remove(item);
-      _context.SaveChanges();
+      await _context.SaveChangesAsync();
       return Ok();
     }
 
