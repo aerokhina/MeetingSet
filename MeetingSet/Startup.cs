@@ -37,6 +37,8 @@ namespace MeetingSet
       services.AddScoped<MeetingNotificationService>();
       
       services.Configure<EmailConfiguration>(Configuration.GetSection("Email"));
+
+      services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
